@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <!-- @if NODE_ENV = 'development' -->
+      Detective - Development
+      <!-- @endif -->
+    </title>
+  </head>
+  <body>
+      <!-- @if NODE_ENV = 'development' -->
+        <header data-ui="docs"></header>
+      <!-- @endif -->
+      <div data-ui="app">
+        <!-- <contacts></contacts> -->
+        <!-- <numericpad></numericpad> -->
+        <inbox></inbox>
+      </div>
+      <script src="./dist.min.js" charset="utf-8"></script>
+  </body>
+</html>
