@@ -41,6 +41,7 @@ $border-search: #a4a4a4;
 $content-height: 40rem;
 $header-height: 4rem;
 $phone-size: 25rem;
+
 .offset {
   background-color: $background-header;
   border: 2rem solid $background-header;
@@ -61,8 +62,8 @@ $phone-size: 25rem;
 .contact{
   &-item {
     border-bottom: 1px solid $border-item;
-    width: 100%;
     list-style-type: none;
+    width: 100%;
   }
   &-list {
     @extend .collapse;

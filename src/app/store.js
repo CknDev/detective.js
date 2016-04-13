@@ -20,22 +20,22 @@ const reduxStore = createPersistentStore(reducer, {
       {
         content: 'hio',
         from: 'John',
-        sent_at: moment().add(7, 'days').format(),
+        sent_at: moment().subtract(7, 'days').format(),
       },
       {
         content: 'hello',
         from: 'James',
-        sent_at: moment().add(5, 'days').format(),
+        sent_at: moment().subtract(5, 'days').format(),
       },
       {
         content: 'john',
         from: 'John',
-        sent_at: moment().add(2, 'hours').format(),
+        sent_at: moment().subtract(2, 'hours').format(),
       },
       {
         content: 'james',
         from: 'James',
-        sent_at: moment().add(3, 'hours').format(),
+        sent_at: moment().subtract(3, 'hours').format(),
       },
     ],
     outbox: [],
