@@ -15,22 +15,23 @@
 </template>
 
 <script>
-'use strict';
-import store from '../../../store'
-import contactVue from './contact/contactItem.vue';
+  'use strict';
 
-export default {
-  data() {
-    return {
-      contacts: this.$select('contacts'),
-    }
-  },
-  components: {
-    'contact-vue': contactVue,
-  },
-  methods: {
-  },
-}
+  import store from '../../../store'
+  import contactVue from './contact/contactItem.vue';
+
+  export default {
+    data() {
+      return {
+        contacts: this.$select('contacts'),
+      }
+    },
+    components: {
+      'contact-vue': contactVue,
+    },
+    methods: {
+    },
+  }
 </script>
 
 <style lang="sass" scoped>

@@ -31,48 +31,48 @@
 </template>
 
 <script>
-'use strict';
-import { pick } from 'ramda';
-import store from '../../../../store';
-import contactEdit from './contactEdit.vue';
-export default {
-  props: ['contact'],
-  data() {
-    return {
-      editfolded: true,
-    };
-  },
-  components: {
-    'contact-edit': contactEdit,
-  },
-  events: {
-      'toggleEdit': function(folded) {
-        this.editfolded = !folded;
+  'use strict';
+  import { pick } from 'ramda';
+  import store from '../../../../store';
+  import contactEdit from './contactEdit.vue';
+  export default {
+    props: ['contact'],
+    data() {
+      return {
+        editfolded: true,
+      };
+    },
+    components: {
+      'contact-edit': contactEdit,
+    },
+    events: {
+        'toggleEdit': function(folded) {
+          this.editfolded = !folded;
+        },
+        'update': function({ id, name, phone_number }) {
+          const { updateContact }  = store.actions;
+          store.dispatch(updateContact(
+            id,
+            { name: name, phone_number: phone_number }));
+        },
+    },
+    methods: {
+      editable() {
+        return pick(['id','name', 'phone_number'], this.contact);
       },
-      'update': function({ id, name, phone_number }) {
-        const { updateContact }  = store.actions;
-        store.dispatch(updateContact(
-          id,
-          { name: name, phone_number: phone_number }));
+      toggleEdit() {
+        this.editfolded = !this.editfolded;
       },
-  },
-  methods: {
-    editable() {
-      return pick(['id','name', 'phone_number'], this.contact);
+      remove(id) {
+        const { removeContact } = store.actions;
+        store.dispatch(removeContact(id));
+      },
+      countUnread(contact) {
+        const { countUnread } = store.actions;
+        store.dispatch(countUnread(contact.id));
+      },
     },
-    toggleEdit() {
-      this.editfolded = !this.editfolded;
-    },
-    remove(id) {
-      const { removeContact } = store.actions;
-      store.dispatch(removeContact(id));
-    },
-    countUnread(contact) {
-      const { countUnread } = store.actions;
-      store.dispatch(countUnread(contact.id));
-    },
-  },
-}
+  }
 </script>
 
 <style lang="sass" scoped>
