@@ -27,3 +27,8 @@ documentation   | :books:
 cosmetic        | :lipstick:
 tests           | :wrench:
 performance     | :racehorse:
+refactor        | :shirt:
+license         | :license:
+w.i.p           | :construction:
+packaging       | :package:
+version tag     | :bookmark: 
