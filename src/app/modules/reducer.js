@@ -1,17 +1,14 @@
 import * as type from './action';
 
-
 /**
-  * @desc count unread messages for a given contact's id
+  * @desc count unread messages for a given contact id
   * @method unread
   * @param {Integer} id - contact id to search for
   * @param {Array} contacts
   */
-function unread(id, contacts) {
+export function unread(id, contacts) {
   const currentContact = contacts.filter(contact => contact.id === id);
-  return currentContact.inbox
-    .filter(message => message.status === type.STATUS_UNREAD)
-    .length;
+  return currentContact.unread;
 }
 
 /**
@@ -43,9 +40,12 @@ function update(id, payload, contacts) {
  * @param {Object} state
  */
 export default function (state, action) {
+  if (!(action) || !(action.type)) {
+    return state;
+  }
   switch (action.type) {
     case type.ADD_CONTACT:
-      return Object.assign({}, state, { contacts: [...state, action.contact] });
+      return Object.assign({}, state, { contacts: [...state.contacts, action.contact] });
     case type.UPDATE_CONTACT:
       return Object.assign({}, state,
          { contacts: update(action.id, action.payload, state.contacts) });
