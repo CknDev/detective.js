@@ -22,3 +22,11 @@ To launch test :
 $ npm test
 $ npm cover # coverage
 ```
+
+## docs
+
+compile & serve:
+
+```bash
+$ gulp wiki # serve at localhost:4040
+```

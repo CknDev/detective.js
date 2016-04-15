@@ -8,37 +8,117 @@ import gulp from 'gulp';
 import gplugins from 'gulp-load-plugins';
 import bSync from 'browser-sync';
 
+const pkg = require('./package.json');
+
 const plugins = gplugins({
   debug: true,
   lazy: false,
 });
 const sync = bSync.create();
 
+/**
+ * Package app
+ * @method babel
+ */
 export function babel() {
   const b = browserify(watchify.args);
   b.add('./src/app/main.js');
   b.transform(babelify);
   b.transform(vueify);
-  b.bundle()
+  return b.bundle()
   .pipe(vSource('dist.min.js'))
   .pipe(vBuffer())
   .pipe(plugins.sourcemaps.init())
   .pipe(plugins.sourcemaps.write('./'))
   .pipe(plugins.debug({ title: 'babel: built into' }))
-  .pipe(gulp.dest('./dist'))
-  .pipe(sync.stream());
-  return b;
-}
-export function html() {
-  return gulp.src('./src/index.html')
-  .pipe(plugins.preprocess({ context: { NODE_ENV: 'development', DEBUG: true } }))
-  .pipe(gulp.dest('./dist/'))
-  .pipe(sync.stream());
-}
-export function watch() {
-  return gulp.watch(['./src/**/*.*', 'src/index.html'], gulp.parallel(babel, html));
+  .pipe(gulp.dest('./dist'));
 }
 
+/**
+ * Preprocess html
+ * @method html
+ * @param {String} env environment
+ */
+export function html() {
+  return gulp.src('./src/*.html')
+  .pipe(plugins.debug({ title: 'html: build into' }))
+  .pipe(gulp.dest('./dist/'));
+}
+
+/**
+ * Generate wiki
+ * @method wikiDoc
+ */
+export function wikiDoc() {
+  const b = browserify(watchify.args);
+  b.add('./src/wiki/src/wiki.js');
+  b.transform(babelify);
+  b.transform(vueify);
+  return b.bundle()
+  .pipe(vSource('wiki.min.js'))
+  .pipe(vBuffer())
+  .pipe(plugins.sourcemaps.init())
+  .pipe(plugins.sourcemaps.write('./'))
+  .pipe(plugins.debug({ title: 'babel: built into' }))
+  .pipe(gulp.dest('./docs/web/src'));
+}
+
+/**
+ * Preprocess doc html
+ * @method htmlDoc
+ */
+export function htmlDoc() {
+  return gulp.src('./src/wiki/index.html')
+  .pipe(plugins.debug({ title: 'html: build into' }))
+  .pipe(gulp.dest('./docs/web'));
+}
+
+/**
+ * Generate esdocs for app modules
+ * @method doc
+ */
+export function doc() {
+  return gulp.src('./src/app/modules')
+  .pipe(plugins.esdoc({ destination: './docs/modules' }));
+}
+
+/**
+ * Start server for wiki
+ * @method serverDoc
+ */
+export function serverDoc() {
+  return plugins.connect.server({
+    root: ['docs/web/', 'docs'],
+    port: 4040,
+  });
+}
+
+/**
+ * Package dist for production
+ * @method compress
+ */
+export function compress() {
+  return gulp.src('./dist/*')
+  .pipe(plugins.tar(`release-${pkg.version}.tar`))
+  .pipe(plugins.gzip())
+  .pipe(gulp.dest('./release'));
+}
+
+/**
+ * Watch and recompile
+ * @method watch
+ */
+export function watch() {
+  return gulp.watch(
+    ['./src/**/*.*', 'src/index.html'],
+    gulp.parallel(html, babel)
+  );
+}
+
+/**
+ * Watch and reload
+ * @method synchronize
+ */
 export function synchronize() {
   sync.init({
     browser: 'chromium',
@@ -48,6 +128,8 @@ export function synchronize() {
   });
 }
 
-const build = gulp.series(gulp.parallel(watch, synchronize));
-export { build };
+const wiki = gulp.series(doc, gulp.parallel(wikiDoc, htmlDoc), serverDoc);
+const build = gulp.series(html, babel, gulp.parallel(watch, synchronize));
+
+export { build, wiki };
 export default build;

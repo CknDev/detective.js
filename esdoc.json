@@ -1,0 +1,4 @@
+{
+  "source": "./src/app/modules",
+  "destination": "./docs/modules"
+}

@@ -35,9 +35,10 @@ function update(id, payload, contacts) {
 /**
  * @desc reduce contacts
  * @method contacts
- * @param {Object} state
+ * @param {Object} state - original state
  * @param {Object} action
- * @param {Object} state
+ * @param {String} action.type - type of action to apply to the state
+ * @return {Object} state - updated state
  */
 export default function (state, action) {
   if (!(action) || !(action.type)) {

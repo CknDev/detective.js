@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>wiki - Detective</title>
+  </head>
+  <body>
+    <div data-ui="wiki">
+      <ul class="url-list">
+        <li v-for="url in urls" class="url-item">
+            <a href="{{url.link}}">{{url.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <script src="/src/wiki.min.js" charset="utf-8"></script>
+  </body>
+</html>

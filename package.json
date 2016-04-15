@@ -1,11 +1,12 @@
 {
   "name": "detective",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "a sandbox detective game",
   "main": "index.js",
   "scripts": {
-    "test": "ava",
-    "cover": "nyc npm test"
+    "test": "./node_modules/.bin/ava",
+    "cover": "./node_modules/.bin/nyc npm test",
+    "docs": "./node_modules/.bin/esdoc -c esdoc.json"
   },
   "ava": {
     "files": [
@@ -30,14 +31,19 @@
     "babelify": "^7.2.0",
     "browser-sync": "^2.11.2",
     "browserify": "^13.0.0",
+    "esdoc": "^0.4.6",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
     "eslint-plugin-react": "^4.3.0",
     "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-connect": "^3.2.2",
     "gulp-debug": "^2.1.2",
+    "gulp-esdoc": "^0.2.0",
+    "gulp-gzip": "^1.2.0",
     "gulp-load-plugins": "^1.2.0",
     "gulp-preprocess": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-tar": "^1.9.0",
     "node-sass": "^3.4.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

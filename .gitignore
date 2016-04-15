@@ -36,3 +36,6 @@ jspm_packages
 
 # distribuable dir
 dist/
+
+# documentation dir
+docs/
