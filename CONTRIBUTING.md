@@ -31,4 +31,5 @@ refactor        | :shirt:
 license         | :license:
 w.i.p           | :construction:
 packaging       | :package:
-version tag     | :bookmark: 
+version tag     | :bookmark:
+deprecated      | :poop:
