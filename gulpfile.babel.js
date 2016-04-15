@@ -14,6 +14,9 @@ const pkg = require('./package.json');
 const plugins = gplugins({
   debug: true,
   lazy: false,
+  rename: {
+    'gulp-markdown-docs': 'mdDoc',
+  },
 });
 const sync = bSync.create();
 
@@ -75,6 +78,30 @@ export function wikiDoc() {
   .pipe(plugins.sourcemaps.write('./'))
   .pipe(plugins.debug({ title: 'babel: built into' }))
   .pipe(gulp.dest('./docs/web/src'));
+}
+
+/**
+ * Compile scss components documentation
+ * @method cssComponentDoc
+ */
+export function cssComponentDoc() {
+  return gulp.src('./src/wiki/components/component.scss')
+  .pipe(plugins.sass())
+  .pipe(gulp.dest('./docs/components/'));
+}
+
+/**
+ * Compile component md into docs
+ * @method componentDoc
+ */
+export function componentDoc() {
+  return gulp.src('./src/wiki/components/**/*.md')
+  .pipe(plugins.mdDoc('index.html', {
+    stylesheetUrl: 'component.css',
+    layoutStylesheetUrl: false,
+  }))
+  .pipe(plugins.debug({ title: 'component doc: built into' }))
+  .pipe(gulp.dest('./docs/components/'));
 }
 
 /**
@@ -142,7 +169,13 @@ export function synchronize() {
   });
 }
 
-const wiki = gulp.series(doc, gulp.parallel(wikiDoc, htmlDoc), serverDoc);
+const wiki = gulp.series(
+  doc,
+  cssComponentDoc,
+  gulp.parallel(componentDoc, wikiDoc, htmlDoc),
+  serverDoc
+);
+
 const build = gulp.series(html, sass, babel, gulp.parallel(watch, synchronize));
 
 export { build, wiki };

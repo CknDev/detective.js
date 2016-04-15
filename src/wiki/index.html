@@ -11,6 +11,11 @@
             <a href="{{url.link}}">{{url.name}}</a>
         </li>
       </ul>
+      <ul class="tool-list">
+        <li v-for="tool in tools" class="tool-item">
+          <a href="{{tool.link}}">[{{tool.cat}}] {{tool.name}}</a>
+        </li>
+      </ul>
     </div>
     <script src="/src/wiki.min.js" charset="utf-8"></script>
   </body>
