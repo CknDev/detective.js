@@ -4,6 +4,7 @@ import browserify from 'browserify';
 import watchify from 'watchify';
 import babelify from 'babelify';
 import vueify from 'vueify';
+import partialify from 'partialify';
 import gulp from 'gulp';
 import gplugins from 'gulp-load-plugins';
 import bSync from 'browser-sync';
@@ -25,6 +26,7 @@ export function babel() {
   b.add('./src/app/main.js');
   b.transform(babelify);
   b.transform(vueify);
+  b.transform(partialify);
   return b.bundle()
   .pipe(vSource('dist.min.js'))
   .pipe(vBuffer())
@@ -32,6 +34,18 @@ export function babel() {
   .pipe(plugins.sourcemaps.write('./'))
   .pipe(plugins.debug({ title: 'babel: built into' }))
   .pipe(gulp.dest('./dist'));
+}
+
+/**
+ * Sass to css components
+ * @method sass
+ */
+export function sass() {
+  return gulp.src('./src/app/components/**/*.scss')
+  .pipe(plugins.debug({ title: 'sass: build from' }))
+  .pipe(plugins.sass())
+  .pipe(plugins.debug({ title: 'sass: build into' }))
+  .pipe(gulp.dest('./src/app/components'));
 }
 
 /**
@@ -111,7 +125,7 @@ export function compress() {
 export function watch() {
   return gulp.watch(
     ['./src/**/*.*', 'src/index.html'],
-    gulp.parallel(html, babel)
+    gulp.parallel(html, sass, babel)
   );
 }
 
@@ -129,7 +143,7 @@ export function synchronize() {
 }
 
 const wiki = gulp.series(doc, gulp.parallel(wikiDoc, htmlDoc), serverDoc);
-const build = gulp.series(html, babel, gulp.parallel(watch, synchronize));
+const build = gulp.series(html, sass, babel, gulp.parallel(watch, synchronize));
 
 export { build, wiki };
 export default build;

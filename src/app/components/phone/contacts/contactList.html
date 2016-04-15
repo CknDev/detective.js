@@ -1,0 +1,13 @@
+<div class="header"></div>
+
+<div class="content">
+  <input type="text"
+  name="contact-search" class="contact-search" placeholder="search" />
+  <ul class="contact-list">
+    <li v-for="contact in contacts" class="contact-item">
+      <contact-vue v-model="contact" v-bind:contact="contact"></contact-vue>
+    </li>
+  </ul>
+</div>
+
+<div class="footer"></div>

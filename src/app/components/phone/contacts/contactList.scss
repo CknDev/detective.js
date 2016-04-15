@@ -1,40 +1,3 @@
-<template>
-  <div class="header"></div>
-
-  <div class="content">
-    <input type="text"
-    name="contact-search" class="contact-search" placeholder="search" />
-    <ul class="contact-list">
-      <li v-for="contact in contacts" class="contact-item">
-        <contact-vue v-model="contact" v-bind:contact="contact"></contact-vue>
-      </li>
-    </ul>
-  </div>
-
-  <div class="footer"></div>
-</template>
-
-<script>
-  'use strict';
-
-  import store from '../../../store'
-  import contactVue from './contact/contactItem.vue';
-
-  export default {
-    data() {
-      return {
-        contacts: this.$select('contacts'),
-      }
-    },
-    components: {
-      'contact-vue': contactVue,
-    },
-    methods: {
-    },
-  }
-</script>
-
-<style lang="sass" scoped>
 $background-content: #fefefe;
 $background-header: #121212;
 $border-item: #ccc;
@@ -94,4 +57,3 @@ $phone-size: 25rem;
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
 }
-</style>

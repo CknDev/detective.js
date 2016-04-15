@@ -1,0 +1,12 @@
+<div class="header"></div>
+<div class="content">
+  <ul class="inbox-list">
+    <li class="inbox-item" v-for="message in last(me.inbox)">
+      <span>{{ message.from }}</span>
+      <span>{{ message.content }}</span>
+      <span>{{ diff(message.sent_at) }}</span>
+    </li>
+  </ul>
+</div>
+<div class="footer"></div>
+</div>
