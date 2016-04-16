@@ -62,6 +62,13 @@ export function html() {
   .pipe(gulp.dest('./dist/'));
 }
 
+export function lint() {
+  return gulp.src(['./src/app/**/*.js', '!node_modules/**'])
+  .pipe(plugins.eslint())
+  .pipe(plugins.eslint.format())
+  .pipe(plugins.eslint.failAfterError());
+}
+
 /**
  * Generate wiki
  * @method wikiDoc
@@ -102,6 +109,13 @@ export function componentDoc() {
   }))
   .pipe(plugins.debug({ title: 'component doc: built into' }))
   .pipe(gulp.dest('./docs/components/'));
+}
+
+export function guideDoc() {
+  return gulp.src('./src/wiki/guide/**/*.md')
+  .pipe(plugins.mdDoc('index.html'))
+  .pipe(plugins.debug({ title: 'guide doc: built into' }))
+  .pipe(gulp.dest('./docs/guide'));
 }
 
 /**
@@ -172,7 +186,7 @@ export function synchronize() {
 const wiki = gulp.series(
   doc,
   cssComponentDoc,
-  gulp.parallel(componentDoc, wikiDoc, htmlDoc),
+  gulp.parallel(guideDoc, componentDoc, wikiDoc, htmlDoc),
   serverDoc
 );
 
