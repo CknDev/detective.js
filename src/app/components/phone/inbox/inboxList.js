@@ -1,7 +1,8 @@
 import moment from 'moment';
 import { orderBy, uniqBy } from 'lodash';
 
-import store from '../../../store';
+import store from '../../../store'; // eslint-disable-line no-unused-vars
+
 require('insert-css')(require('./inboxList.css'));
 
 module.exports = {

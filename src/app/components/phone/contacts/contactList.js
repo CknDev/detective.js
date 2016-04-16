@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../store'; // eslint-disable-line no-unused-vars
 import contactVue from './contact/contactItem.vue';
 require('insert-css')(require('./contactList.css'));
 
