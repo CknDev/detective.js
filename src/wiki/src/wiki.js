@@ -9,6 +9,7 @@ const App = new Vue({
       { name: 'modules', link: 'modules' },
       { name: 'components', link: 'components' },
       { name: 'guide', link: 'guide' },
+      { name: 'tasks', link: 'tasks' },
     ],
     tools: [
       { cat: 'test', name: 'ava', link: 'https://github.com/sindresorhus/ava' },

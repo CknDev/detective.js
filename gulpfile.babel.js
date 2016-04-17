@@ -54,7 +54,6 @@ export function sass() {
 /**
  * Preprocess html
  * @method html
- * @param {String} env environment
  */
 export function html() {
   return gulp.src('./src/*.html')
@@ -62,6 +61,10 @@ export function html() {
   .pipe(gulp.dest('./dist/'));
 }
 
+/**
+ * Lint file
+ * @method lint
+ */
 export function lint() {
   return gulp.src(['./src/app/**/*.js', '!node_modules/**'])
   .pipe(plugins.eslint())
@@ -111,6 +114,21 @@ export function componentDoc() {
   .pipe(gulp.dest('./docs/components/'));
 }
 
+/**
+ * Compile tasks md into docs
+ * @method taskDoc
+ */
+export function taskDoc() {
+  return gulp.src('./src/wiki/tasks/**/*.md')
+  .pipe(plugins.mdDoc('index.html'))
+  .pipe(plugins.debug({ tile: 'tasks doc: built into' }))
+  .pipe(gulp.dest('./docs/tasks/'));
+}
+
+/**
+ * Compile guide md into docs
+ * @method guideDoc
+ */
 export function guideDoc() {
   return gulp.src('./src/wiki/guide/**/*.md')
   .pipe(plugins.mdDoc('index.html'))
@@ -186,11 +204,11 @@ export function synchronize() {
 const wiki = gulp.series(
   doc,
   cssComponentDoc,
-  gulp.parallel(guideDoc, componentDoc, wikiDoc, htmlDoc),
+  gulp.parallel(taskDoc, guideDoc, componentDoc, wikiDoc, htmlDoc),
   serverDoc
 );
 
-const build = gulp.series(html, sass, babel, gulp.parallel(watch, synchronize));
+const build = gulp.series(html, sass, lint, babel, gulp.parallel(watch, synchronize));
 
 export { build, wiki };
 export default build;

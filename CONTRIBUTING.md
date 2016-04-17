@@ -1,5 +1,18 @@
 # CONTRIBUTING
 
+## Add a feature
+
+Refer to docs/guide.
+
+To build docs:
+
+```bash
+$ gulp wiki
+$ open http://localhost:4040/guide
+```
+
+## Add a gulp task
+
 ## Commiting
 
 ### Commit Structure
